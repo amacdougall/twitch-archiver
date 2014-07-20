@@ -9,16 +9,14 @@ require "streamio-ffmpeg"
 
 BASE_JSON_URL = "http://api.justin.tv/api/broadcast/by_archive/"
 
-broadcast_id, title = ARGV
+broadcast_id, output_dir = ARGV
 
-unless broadcast_id && broadcast_id =~ /\d+/ && title
-  puts "Usage: bundle exec archive <broadcast_id> <title>"
+unless broadcast_id && broadcast_id =~ /\d+/ && output_dir
+  puts "Usage: bundle exec archive <broadcast_id> <output_dir>"
   exit
 end
 
 file_json = MultiJson.load(open(URI.join(BASE_JSON_URL, broadcast_id + ".json")));
-
-output_dir = title
 
 unless Dir.exists? output_dir
   Dir.mkdir output_dir
